@@ -28,8 +28,8 @@ export default function HorizontalScroll({ title, description, children }: Horiz
     <motion.section
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-      viewport={{ once: true }}
+      transition={{ duration: 0.4 }}
+      viewport={{ once: true, margin: '0px 0px -100px 0px' }}
       className="space-y-6"
     >
       {/* Header */}
@@ -42,8 +42,8 @@ export default function HorizontalScroll({ title, description, children }: Horiz
       <div className="relative group">
         {/* Scroll buttons */}
         <motion.button
-          whileHover={{ scale: 1.1, x: -4 }}
-          whileTap={{ scale: 0.95 }}
+          whileHover={{ scale: 1.08, x: -2 }}
+          whileTap={{ scale: 0.98 }}
           onClick={() => scroll('left')}
           className="absolute -left-6 top-1/2 -translate-y-1/2 z-20 hidden group-hover:flex items-center justify-center w-10 h-10 bg-accent-primary/90 hover:bg-accent-primary text-black rounded-full transition-all shadow-lg opacity-0 group-hover:opacity-100"
         >
@@ -51,8 +51,8 @@ export default function HorizontalScroll({ title, description, children }: Horiz
         </motion.button>
 
         <motion.button
-          whileHover={{ scale: 1.1, x: 4 }}
-          whileTap={{ scale: 0.95 }}
+          whileHover={{ scale: 1.08, x: 2 }}
+          whileTap={{ scale: 0.98 }}
           onClick={() => scroll('right')}
           className="absolute -right-6 top-1/2 -translate-y-1/2 z-20 hidden group-hover:flex items-center justify-center w-10 h-10 bg-accent-primary/90 hover:bg-accent-primary text-black rounded-full transition-all shadow-lg opacity-0 group-hover:opacity-100"
         >

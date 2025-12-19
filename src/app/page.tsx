@@ -20,18 +20,17 @@ export default function Home() {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
+        staggerChildren: 0.05,
+        delayChildren: 0.1,
       },
     },
   }
 
   const sectionVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      y: 0,
-      transition: { duration: 0.6 },
+      transition: { duration: 0.4 },
     },
   }
 
@@ -45,7 +44,7 @@ export default function Home() {
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true }}
+        viewport={{ once: true, margin: '0px 0px -150px 0px' }}
         className="space-y-20 max-w-7xl mx-auto px-6 py-12"
       >
         {/* Listen Now */}

@@ -10,28 +10,29 @@ export default function Hero() {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.3,
+        staggerChildren: 0.1,
+        delayChildren: 0.2,
+        duration: 0.5,
       },
     },
   }
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 10 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.8, ease: 'easeOut' },
+      transition: { duration: 0.5, ease: 'easeOut' },
     },
   }
 
   const albumVariants = {
-    hidden: { opacity: 0, scale: 0.8, x: 100 },
+    hidden: { opacity: 0, scale: 0.9, x: 50 },
     visible: {
       opacity: 1,
       scale: 1,
       x: 0,
-      transition: { duration: 0.8, ease: 'easeOut' },
+      transition: { duration: 0.6, ease: 'easeOut' },
     },
   }
 

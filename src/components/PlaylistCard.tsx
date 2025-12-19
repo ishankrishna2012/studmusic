@@ -13,11 +13,11 @@ interface PlaylistCardProps {
 export default function PlaylistCard({ playlist, index = 0 }: PlaylistCardProps) {
   return (
     <motion.div
-      initial={{ opacity: 0, x: 20 }}
-      whileInView={{ opacity: 1, x: 0 }}
-      transition={{ delay: index * 0.1, duration: 0.5 }}
-      viewport={{ once: true }}
-      className="card-hover group relative flex-shrink-0 w-48 bg-dark-secondary rounded-xl overflow-hidden border border-dark-tertiary/50 hover:border-accent-primary/50 transition-all"
+      initial={{ opacity: 0, y: 10 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.05, duration: 0.4 }}
+      viewport={{ once: true, margin: '0px 0px -50px 0px' }}
+      className="card-hover group relative flex-shrink-0 w-48 bg-dark-secondary rounded-xl overflow-hidden border border-dark-tertiary/50 transition-all hover:border-accent-primary/50"
     >
       {/* Album art */}
       <div className="relative w-full aspect-square overflow-hidden">
@@ -25,7 +25,8 @@ export default function PlaylistCard({ playlist, index = 0 }: PlaylistCardProps)
           src={playlist.coverUrl}
           alt={playlist.title}
           fill
-          className="object-cover group-hover:scale-110 transition-transform duration-300"
+          className="object-cover group-hover:scale-105 transition-transform duration-200"
+          loading="lazy"
         />
         {/* Gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-dark-secondary via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>

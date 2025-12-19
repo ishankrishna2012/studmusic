@@ -16,8 +16,8 @@ const config: Config = {
         'accent-secondary': '#ff006e',
       },
       animation: {
-        'fade-in': 'fadeIn 0.6s ease-out',
-        'slide-up': 'slideUp 0.6s ease-out',
+        'fade-in': 'fadeIn 0.4s ease-out',
+        'slide-up': 'slideUp 0.4s ease-out',
         'pulse-soft': 'pulseSoft 2s ease-in-out infinite',
         'float': 'float 3s ease-in-out infinite',
       },

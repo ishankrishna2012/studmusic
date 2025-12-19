@@ -8,6 +8,8 @@
 
 html {
   scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
@@ -40,7 +42,7 @@ body {
 button,
 a,
 .card {
-  transition: all 0.3s ease;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 /* Gradient backgrounds */
@@ -63,12 +65,13 @@ a,
 
 /* Card hover lift */
 .card-hover {
-  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  will-change: transform, box-shadow;
 }
 
 .card-hover:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
 }
 
 /* Horizontal scroll smoothing */

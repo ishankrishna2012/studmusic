@@ -1,0 +1,72 @@
+# Netlify Configuration for StudMusic
+# This file optimizes deployment for production on Netlify
+
+[build]
+  command = "npm run build"
+  functions = "netlify/functions"
+  publish = ".next"
+  environment = { NODE_VERSION = "18.19.0" }
+
+[build.environment]
+  # Performance & optimization
+  NODE_ENV = "production"
+  NEXT_TELEMETRY_DISABLED = "1"
+  
+[functions]
+  # Optimize serverless functions
+  node_bundler = "esbuild"
+  external_node_modules = ["framer-motion", "react", "react-dom"]
+
+# Redirect rules for SPA (Single Page App) behavior
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  condition = { NOT = [{ status = "200" }] }
+
+# Custom headers for performance & security
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    X-XSS-Protection = "1; mode=block"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+
+# Static assets - long cache
+[[headers]]
+  for = "/_next/static/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# HTML files - no cache
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# Images - moderate cache
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000"
+
+# Fonts - long cache
+[[headers]]
+  for = "/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# API calls - optional: if using external APIs
+[[headers]]
+  for = "/api/*"
+  [headers.values]
+    Cache-Control = "public, max-age=60"
+
+# Critical CSS & JS - no cache
+[[headers]]
+  for = "/_next/*"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"

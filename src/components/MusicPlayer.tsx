@@ -44,7 +44,7 @@ export default function MusicPlayer({ initialTrack }: MusicPlayerProps) {
     <motion.footer
       initial={{ y: 100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ delay: 0.5, duration: 0.6 }}
+      transition={{ delay: 0.3, duration: 0.4 }}
       className="fixed bottom-0 left-0 right-0 bg-dark-secondary/95 backdrop-blur-lg border-t border-dark-tertiary"
     >
       {/* Progress bar */}
@@ -84,8 +84,8 @@ export default function MusicPlayer({ initialTrack }: MusicPlayerProps) {
             </button>
 
             <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.98 }}
               onClick={handlePlayPause}
               className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${
                 isPlaying
