@@ -18,6 +18,14 @@ module.exports = {
 
   /* Webpack optimization */
   webpack: (config, { isServer }) => {
+    const path = require('path');
+    
+    // Add path alias resolution
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@': path.resolve(__dirname, 'src'),
+    };
+    
     if (!isServer) {
       config.optimization = {
         ...config.optimization,
