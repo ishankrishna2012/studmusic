@@ -1,6 +1,7 @@
 /* Production-optimized Next.js configuration for Netlify */
 module.exports = {
   reactStrictMode: true,
+  output: 'standalone',
   
   /* Image Optimization */
   images: {
