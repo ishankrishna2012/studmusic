@@ -26,14 +26,13 @@ import { motion } from 'framer-motion'
 export default function Home() {
   const [tracks, setTracks] = useState<Track[]>(mockTracks)
   const [playlists, setPlaylists] = useState<Playlist[]>(listenNowPlaylists)
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
     // Load data on mount
     const loadData = async () => {
       try {
-        setIsLoading(true)
-        // Fetch trending tracks and featured playlists
+        // Don't show loading - use mock data immediately
         const [trendingData, featuredData] = await Promise.all([
           getTrendingTracks(),
           getFeaturedPlaylists(),
@@ -48,8 +47,6 @@ export default function Home() {
       } catch (error) {
         console.warn('Failed to load API data, using fallback:', error)
         // Keep using mock data if API fails
-      } finally {
-        setIsLoading(false)
       }
     }
 
@@ -91,27 +88,15 @@ export default function Home() {
         <Hero />
       </div>
 
-      {/* Loading indicator */}
-      {isLoading && (
-        <div className="flex justify-center items-center py-20">
-          <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
-            className="w-8 h-8 border-4 border-accent-primary border-t-transparent rounded-full"
-          />
-        </div>
-      )}
-
       {/* Main content sections */}
-      {!isLoading && (
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '0px 0px -150px 0px' }}
-          className="space-y-16 md:space-y-20 w-full px-4 sm:px-6 py-12 md:py-16"
-        >
-          <div className="max-w-7xl mx-auto w-full space-y-16 md:space-y-20">
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: '0px 0px -150px 0px' }}
+        className="space-y-16 md:space-y-20 w-full px-4 sm:px-6 py-12 md:py-16"
+      >
+        <div className="max-w-7xl mx-auto w-full space-y-16 md:space-y-20">
             {/* Listen Now */}
             <motion.div variants={sectionVariants} className="w-full">
               <HorizontalScroll
@@ -187,7 +172,6 @@ export default function Home() {
             </motion.div>
           </div>
         </motion.div>
-      )}
 
       {/* Music Player - Fixed at bottom */}
       <div className="fixed bottom-0 left-0 right-0 z-40">
