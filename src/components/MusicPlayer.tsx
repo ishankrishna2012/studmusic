@@ -45,10 +45,10 @@ export default function MusicPlayer({ initialTrack }: MusicPlayerProps) {
       initial={{ y: 100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ delay: 0.3, duration: 0.4 }}
-      className="fixed bottom-0 left-0 right-0 bg-dark-secondary/95 backdrop-blur-lg border-t border-dark-tertiary"
+      className="fixed bottom-0 left-0 right-0 bg-dark-secondary/95 backdrop-blur-lg border-t border-dark-tertiary z-30"
     >
       {/* Progress bar */}
-      <div className="w-full h-1 bg-dark-tertiary cursor-pointer group">
+      <div className="w-full h-0.5 sm:h-1 bg-dark-tertiary cursor-pointer group">
         <motion.div
           className="h-full bg-gradient-accent"
           initial={{ width: '0%' }}
@@ -58,10 +58,10 @@ export default function MusicPlayer({ initialTrack }: MusicPlayerProps) {
         />
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
+      <div className="max-w-7xl mx-auto px-2 sm:px-4 md:px-6 py-2 sm:py-3 flex items-center justify-between gap-2 sm:gap-4">
         {/* Left - Track info */}
-        <div className="hidden sm:flex items-center gap-4 min-w-0 flex-1">
-          <div className="relative w-14 h-14 rounded-lg overflow-hidden flex-shrink-0 shadow-lg">
+        <div className="hidden sm:flex items-center gap-2 sm:gap-4 min-w-0 flex-1">
+          <div className="relative w-12 sm:w-14 h-12 sm:h-14 rounded-lg overflow-hidden flex-shrink-0 shadow-lg">
             <Image
               src={currentTrack.coverUrl}
               alt={currentTrack.title}
@@ -69,15 +69,14 @@ export default function MusicPlayer({ initialTrack }: MusicPlayerProps) {
               className="object-cover"
             />
           </div>
-          <div className="min-w-0">
-            <h4 className="font-semibold text-sm truncate">{currentTrack.title}</h4>
+          <div className="min-w-0 hidden sm:block">
+            <h4 className="font-semibold text-xs sm:text-sm truncate">{currentTrack.title}</h4>
             <p className="text-xs text-gray-400 truncate">{currentTrack.artist}</p>
           </div>
         </div>
 
         {/* Center - Player controls */}
-        <div className="flex flex-col items-center gap-2 flex-1">
-          {/* Controls */}
+        <div className="flex flex-col items-center gap-1 sm:gap-2 flex-1 min-w-0">
           <div className="flex items-center gap-4">
             <button className="text-gray-400 hover:text-white transition-colors">
               <SkipBack className="w-5 h-5" />

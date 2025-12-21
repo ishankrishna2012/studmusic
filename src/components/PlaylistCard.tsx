@@ -17,7 +17,7 @@ export default function PlaylistCard({ playlist, index = 0 }: PlaylistCardProps)
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.05, duration: 0.4 }}
       viewport={{ once: true, margin: '0px 0px -50px 0px' }}
-      className="card-hover group relative flex-shrink-0 w-48 bg-dark-secondary rounded-xl overflow-hidden border border-dark-tertiary/50 transition-all hover:border-accent-primary/50"
+      className="card-hover group relative flex-shrink-0 w-40 sm:w-44 md:w-48 bg-dark-secondary rounded-lg sm:rounded-xl overflow-hidden border border-dark-tertiary/50 transition-all hover:border-accent-primary/50"
     >
       {/* Album art */}
       <div className="relative w-full aspect-square overflow-hidden">
@@ -42,9 +42,9 @@ export default function PlaylistCard({ playlist, index = 0 }: PlaylistCardProps)
       </div>
 
       {/* Card content */}
-      <div className="p-4 space-y-3">
-        <div className="space-y-1">
-          <h3 className="font-semibold text-sm line-clamp-2 group-hover:text-accent-primary transition-colors">
+      <div className="p-3 sm:p-4 space-y-2 sm:space-y-3">
+        <div className="space-y-0.5 sm:space-y-1">
+          <h3 className="font-semibold text-xs sm:text-sm line-clamp-2 group-hover:text-accent-primary transition-colors">
             {playlist.title}
           </h3>
           <p className="text-xs text-gray-400 line-clamp-2">{playlist.description}</p>

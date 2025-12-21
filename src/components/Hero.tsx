@@ -37,26 +37,26 @@ export default function Hero() {
   }
 
   return (
-    <section className="relative min-h-screen pt-24 pb-12 px-6 overflow-hidden">
+    <section className="relative min-h-[70vh] md:min-h-screen pt-20 md:pt-24 pb-8 md:pb-12 px-4 sm:px-6 overflow-hidden">
       {/* Animated gradient background */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute top-0 -left-40 w-80 h-80 bg-accent-primary/20 rounded-full mix-blend-multiply filter blur-3xl animate-float"></div>
-        <div className="absolute top-40 -right-40 w-80 h-80 bg-accent-secondary/20 rounded-full mix-blend-multiply filter blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
-        <div className="absolute -bottom-8 left-20 w-80 h-80 bg-blue-500/10 rounded-full mix-blend-multiply filter blur-3xl animate-float" style={{ animationDelay: '4s' }}></div>
+        <div className="absolute top-0 -left-40 w-60 md:w-80 h-60 md:h-80 bg-accent-primary/20 rounded-full mix-blend-multiply filter blur-3xl animate-float"></div>
+        <div className="absolute top-40 -right-40 w-60 md:w-80 h-60 md:h-80 bg-accent-secondary/20 rounded-full mix-blend-multiply filter blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute -bottom-8 left-20 w-60 md:w-80 h-60 md:h-80 bg-blue-500/10 rounded-full mix-blend-multiply filter blur-3xl animate-float" style={{ animationDelay: '4s' }}></div>
       </div>
 
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <div className="max-w-7xl mx-auto w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
           {/* Left content */}
           <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-8">
             {/* Headline */}
-            <motion.h1 variants={itemVariants} className="text-5xl lg:text-7xl font-bold leading-tight">
-              StudMusic
-              <span className="gradient-text"> — All Your Music, One Place</span>
-            </motion.h1>
+          <motion.h1 variants={itemVariants} className="text-4xl sm:text-5xl lg:text-7xl font-bold leading-tight">
+            StudMusic
+            <span className="gradient-text"> — All Your Music, One Place</span>
+          </motion.h1>
 
             {/* Subheadline */}
-            <motion.p variants={itemVariants} className="text-xl text-gray-300 max-w-xl leading-relaxed">
+            <motion.p variants={itemVariants} className="text-base sm:text-lg lg:text-xl text-gray-300 max-w-xl leading-relaxed">
               Stream from multiple free music sources. Built for students, by students. Your library is instantly available across all your devices.
             </motion.p>
 
