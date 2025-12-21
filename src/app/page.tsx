@@ -1,5 +1,6 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import Navigation from '@/components/Navigation'
 import Hero from '@/components/Hero'
 import HorizontalScroll from '@/components/HorizontalScroll'
@@ -12,9 +13,53 @@ import {
   recentlyPlayedPlaylists,
   mockTracks,
 } from '@/lib/mockData'
+import { 
+  getTrendingTracks, 
+  getFeaturedPlaylists,
+  getRecentlyPlayed,
+  addToRecentlyPlayed,
+  type Track,
+  type Playlist 
+} from '@/lib/musicApi'
 import { motion } from 'framer-motion'
 
 export default function Home() {
+  const [tracks, setTracks] = useState<Track[]>(mockTracks)
+  const [playlists, setPlaylists] = useState<Playlist[]>(listenNowPlaylists)
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    // Load data on mount
+    const loadData = async () => {
+      try {
+        setIsLoading(true)
+        // Fetch trending tracks and featured playlists
+        const [trendingData, featuredData] = await Promise.all([
+          getTrendingTracks(),
+          getFeaturedPlaylists(),
+        ])
+        
+        if (trendingData.length > 0) {
+          setTracks(trendingData)
+        }
+        if (featuredData.length > 0) {
+          setPlaylists(featuredData)
+        }
+      } catch (error) {
+        console.warn('Failed to load API data, using fallback:', error)
+        // Keep using mock data if API fails
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    loadData()
+  }, [])
+
+  const handlePlayTrack = (track: Track) => {
+    addToRecentlyPlayed(track)
+  }
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -39,91 +84,104 @@ export default function Home() {
       <Navigation />
       <Hero />
 
+      {/* Loading indicator */}
+      {isLoading && (
+        <div className="flex justify-center items-center py-12">
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
+            className="w-8 h-8 border-4 border-accent-primary border-t-transparent rounded-full"
+          />
+        </div>
+      )}
+
       {/* Main content sections */}
-      <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: '0px 0px -150px 0px' }}
-        className="space-y-20 max-w-7xl mx-auto px-6 py-12"
-      >
-        {/* Listen Now */}
-        <motion.div variants={sectionVariants}>
-          <HorizontalScroll
-            title="Listen Now"
-            description="Your personalized playlist picks to get started"
-          >
-            {listenNowPlaylists.map((playlist, idx) => (
-              <PlaylistCard key={playlist.id} playlist={playlist} index={idx} />
-            ))}
-          </HorizontalScroll>
-        </motion.div>
-
-        {/* Trending Now */}
-        <motion.div variants={sectionVariants}>
-          <HorizontalScroll
-            title="Trending Now"
-            description="What's hot this week in the student community"
-          >
-            {trendingPlaylists.map((playlist, idx) => (
-              <PlaylistCard key={playlist.id} playlist={playlist} index={idx} />
-            ))}
-          </HorizontalScroll>
-        </motion.div>
-
-        {/* Top 20 Charts */}
-        <motion.div variants={sectionVariants}>
-          <HorizontalScroll
-            title="Top 20 Chart"
-            description="The most streamed tracks and playlists globally"
-          >
-            {chartTopPlaylists.map((playlist, idx) => (
-              <PlaylistCard key={playlist.id} playlist={playlist} index={idx} />
-            ))}
-          </HorizontalScroll>
-        </motion.div>
-
-        {/* Student Picks */}
-        <motion.div variants={sectionVariants}>
-          <HorizontalScroll
-            title="Student Picks"
-            description="Curated by and for the student community"
-          >
-            {[...listenNowPlaylists].reverse().map((playlist, idx) => (
-              <PlaylistCard key={`sp-${playlist.id}`} playlist={playlist} index={idx} />
-            ))}
-          </HorizontalScroll>
-        </motion.div>
-
-        {/* Recently Played */}
-        <motion.div variants={sectionVariants}>
-          <HorizontalScroll
-            title="Recently Played"
-            description="Continue where you left off"
-          >
-            {recentlyPlayedPlaylists.map((playlist, idx) => (
-              <PlaylistCard key={playlist.id} playlist={playlist} index={idx} />
-            ))}
-          </HorizontalScroll>
-        </motion.div>
-
-        {/* Footer promo section */}
+      {!isLoading && (
         <motion.div
-          variants={sectionVariants}
-          className="mt-20 p-8 md:p-12 rounded-2xl bg-gradient-to-r from-accent-primary/20 to-accent-secondary/20 border border-dark-tertiary backdrop-blur-sm"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '0px 0px -150px 0px' }}
+          className="space-y-20 max-w-7xl mx-auto px-6 py-12"
         >
-          <h3 className="text-3xl font-bold mb-4">Ready to discover more?</h3>
-          <p className="text-gray-300 mb-6 max-w-2xl">
-            StudMusic connects you to millions of songs across multiple platforms. Stream, share, and build your ultimate music library with your friends.
-          </p>
-          <button className="px-8 py-3 bg-accent-primary text-black font-semibold rounded-full hover:scale-105 transition-all active:scale-95 shadow-lg shadow-accent-primary/50">
-            Explore Now
-          </button>
+          {/* Listen Now */}
+          <motion.div variants={sectionVariants}>
+            <HorizontalScroll
+              title="Listen Now"
+              description="Your personalized playlist picks to get started"
+            >
+              {listenNowPlaylists.map((playlist, idx) => (
+                <PlaylistCard key={playlist.id} playlist={playlist} index={idx} />
+              ))}
+            </HorizontalScroll>
+          </motion.div>
+
+          {/* Trending Now */}
+          <motion.div variants={sectionVariants}>
+            <HorizontalScroll
+              title="Trending Now"
+              description="What's hot this week in the student community"
+            >
+              {trendingPlaylists.map((playlist, idx) => (
+                <PlaylistCard key={playlist.id} playlist={playlist} index={idx} />
+              ))}
+            </HorizontalScroll>
+          </motion.div>
+
+          {/* Top 20 Charts */}
+          <motion.div variants={sectionVariants}>
+            <HorizontalScroll
+              title="Top 20 Chart"
+              description="The most streamed tracks and playlists globally"
+            >
+              {chartTopPlaylists.map((playlist, idx) => (
+                <PlaylistCard key={playlist.id} playlist={playlist} index={idx} />
+              ))}
+            </HorizontalScroll>
+          </motion.div>
+
+          {/* Student Picks */}
+          <motion.div variants={sectionVariants}>
+            <HorizontalScroll
+              title="Student Picks"
+              description="Curated by and for the student community"
+            >
+              {[...listenNowPlaylists].reverse().map((playlist, idx) => (
+                <PlaylistCard key={`sp-${playlist.id}`} playlist={playlist} index={idx} />
+              ))}
+            </HorizontalScroll>
+          </motion.div>
+
+          {/* Recently Played */}
+          <motion.div variants={sectionVariants}>
+            <HorizontalScroll
+              title="Recently Played"
+              description="Continue where you left off"
+            >
+              {recentlyPlayedPlaylists.map((playlist, idx) => (
+                <PlaylistCard key={playlist.id} playlist={playlist} index={idx} />
+              ))}
+            </HorizontalScroll>
+          </motion.div>
+
+          {/* Footer promo section */}
+          <motion.div
+            variants={sectionVariants}
+            className="mt-20 p-8 md:p-12 rounded-2xl bg-gradient-to-r from-accent-primary/20 to-accent-secondary/20 border border-dark-tertiary backdrop-blur-sm"
+          >
+            <h3 className="text-3xl font-bold mb-4">Ready to discover more?</h3>
+            <p className="text-gray-300 mb-6 max-w-2xl">
+              StudMusic connects you to millions of songs across multiple platforms. Stream, share, and build your ultimate music library with your friends.
+            </p>
+            <button className="px-8 py-3 bg-accent-primary text-black font-semibold rounded-full hover:scale-105 transition-all active:scale-95 shadow-lg shadow-accent-primary/50">
+              Explore Now
+            </button>
+          </motion.div>
         </motion.div>
-      </motion.div>
+      )}
 
       {/* Music Player */}
-      <MusicPlayer initialTrack={mockTracks[0]} />
+      <MusicPlayer initialTrack={tracks[0] || mockTracks[0]} />
 
       {/* Scroll hint - visible only on first load */}
       <motion.div
