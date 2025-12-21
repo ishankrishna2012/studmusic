@@ -80,13 +80,20 @@ export default function Home() {
   }
 
   return (
-    <main className="bg-dark-bg text-white min-h-screen pb-32">
-      <Navigation />
-      <Hero />
+    <main className="bg-dark-bg text-white min-h-screen pb-40 overflow-x-hidden">
+      {/* Navigation - Fixed at top */}
+      <div className="sticky top-0 z-50">
+        <Navigation />
+      </div>
+
+      {/* Hero Section */}
+      <div className="relative w-full">
+        <Hero />
+      </div>
 
       {/* Loading indicator */}
       {isLoading && (
-        <div className="flex justify-center items-center py-12">
+        <div className="flex justify-center items-center py-20">
           <motion.div
             animate={{ rotate: 360 }}
             transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
@@ -102,93 +109,97 @@ export default function Home() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '0px 0px -150px 0px' }}
-          className="space-y-20 max-w-7xl mx-auto px-6 py-12"
+          className="space-y-16 md:space-y-20 w-full px-4 sm:px-6 py-12 md:py-16"
         >
-          {/* Listen Now */}
-          <motion.div variants={sectionVariants}>
-            <HorizontalScroll
-              title="Listen Now"
-              description="Your personalized playlist picks to get started"
-            >
-              {listenNowPlaylists.map((playlist, idx) => (
-                <PlaylistCard key={playlist.id} playlist={playlist} index={idx} />
-              ))}
-            </HorizontalScroll>
-          </motion.div>
+          <div className="max-w-7xl mx-auto w-full space-y-16 md:space-y-20">
+            {/* Listen Now */}
+            <motion.div variants={sectionVariants} className="w-full">
+              <HorizontalScroll
+                title="Listen Now"
+                description="Your personalized playlist picks to get started"
+              >
+                {listenNowPlaylists.map((playlist, idx) => (
+                  <PlaylistCard key={playlist.id} playlist={playlist} index={idx} />
+                ))}
+              </HorizontalScroll>
+            </motion.div>
 
-          {/* Trending Now */}
-          <motion.div variants={sectionVariants}>
-            <HorizontalScroll
-              title="Trending Now"
-              description="What's hot this week in the student community"
-            >
-              {trendingPlaylists.map((playlist, idx) => (
-                <PlaylistCard key={playlist.id} playlist={playlist} index={idx} />
-              ))}
-            </HorizontalScroll>
-          </motion.div>
+            {/* Trending Now */}
+            <motion.div variants={sectionVariants} className="w-full">
+              <HorizontalScroll
+                title="Trending Now"
+                description="What's hot this week in the student community"
+              >
+                {trendingPlaylists.map((playlist, idx) => (
+                  <PlaylistCard key={playlist.id} playlist={playlist} index={idx} />
+                ))}
+              </HorizontalScroll>
+            </motion.div>
 
-          {/* Top 20 Charts */}
-          <motion.div variants={sectionVariants}>
-            <HorizontalScroll
-              title="Top 20 Chart"
-              description="The most streamed tracks and playlists globally"
-            >
-              {chartTopPlaylists.map((playlist, idx) => (
-                <PlaylistCard key={playlist.id} playlist={playlist} index={idx} />
-              ))}
-            </HorizontalScroll>
-          </motion.div>
+            {/* Top 20 Charts */}
+            <motion.div variants={sectionVariants} className="w-full">
+              <HorizontalScroll
+                title="Top 20 Chart"
+                description="The most streamed tracks and playlists globally"
+              >
+                {chartTopPlaylists.map((playlist, idx) => (
+                  <PlaylistCard key={playlist.id} playlist={playlist} index={idx} />
+                ))}
+              </HorizontalScroll>
+            </motion.div>
 
-          {/* Student Picks */}
-          <motion.div variants={sectionVariants}>
-            <HorizontalScroll
-              title="Student Picks"
-              description="Curated by and for the student community"
-            >
-              {[...listenNowPlaylists].reverse().map((playlist, idx) => (
-                <PlaylistCard key={`sp-${playlist.id}`} playlist={playlist} index={idx} />
-              ))}
-            </HorizontalScroll>
-          </motion.div>
+            {/* Student Picks */}
+            <motion.div variants={sectionVariants} className="w-full">
+              <HorizontalScroll
+                title="Student Picks"
+                description="Curated by and for the student community"
+              >
+                {[...listenNowPlaylists].reverse().map((playlist, idx) => (
+                  <PlaylistCard key={`sp-${playlist.id}`} playlist={playlist} index={idx} />
+                ))}
+              </HorizontalScroll>
+            </motion.div>
 
-          {/* Recently Played */}
-          <motion.div variants={sectionVariants}>
-            <HorizontalScroll
-              title="Recently Played"
-              description="Continue where you left off"
-            >
-              {recentlyPlayedPlaylists.map((playlist, idx) => (
-                <PlaylistCard key={playlist.id} playlist={playlist} index={idx} />
-              ))}
-            </HorizontalScroll>
-          </motion.div>
+            {/* Recently Played */}
+            <motion.div variants={sectionVariants} className="w-full">
+              <HorizontalScroll
+                title="Recently Played"
+                description="Continue where you left off"
+              >
+                {recentlyPlayedPlaylists.map((playlist, idx) => (
+                  <PlaylistCard key={playlist.id} playlist={playlist} index={idx} />
+                ))}
+              </HorizontalScroll>
+            </motion.div>
 
-          {/* Footer promo section */}
-          <motion.div
-            variants={sectionVariants}
-            className="mt-20 p-8 md:p-12 rounded-2xl bg-gradient-to-r from-accent-primary/20 to-accent-secondary/20 border border-dark-tertiary backdrop-blur-sm"
-          >
-            <h3 className="text-3xl font-bold mb-4">Ready to discover more?</h3>
-            <p className="text-gray-300 mb-6 max-w-2xl">
-              StudMusic connects you to millions of songs across multiple platforms. Stream, share, and build your ultimate music library with your friends.
-            </p>
-            <button className="px-8 py-3 bg-accent-primary text-black font-semibold rounded-full hover:scale-105 transition-all active:scale-95 shadow-lg shadow-accent-primary/50">
-              Explore Now
-            </button>
-          </motion.div>
+            {/* Footer promo section */}
+            <motion.div
+              variants={sectionVariants}
+              className="mt-12 md:mt-20 p-6 md:p-12 rounded-2xl bg-gradient-to-r from-accent-primary/20 to-accent-secondary/20 border border-dark-tertiary backdrop-blur-sm w-full"
+            >
+              <h3 className="text-2xl md:text-3xl font-bold mb-4">Ready to discover more?</h3>
+              <p className="text-gray-300 mb-6 max-w-2xl text-sm md:text-base">
+                StudMusic connects you to millions of songs across multiple platforms. Stream, share, and build your ultimate music library with your friends.
+              </p>
+              <button className="px-6 md:px-8 py-2 md:py-3 bg-accent-primary text-black font-semibold rounded-full hover:scale-105 active:scale-95 transition-all shadow-lg shadow-accent-primary/50 text-sm md:text-base">
+                Explore Now
+              </button>
+            </motion.div>
+          </div>
         </motion.div>
       )}
 
-      {/* Music Player */}
-      <MusicPlayer initialTrack={tracks[0] || mockTracks[0]} />
+      {/* Music Player - Fixed at bottom */}
+      <div className="fixed bottom-0 left-0 right-0 z-40">
+        <MusicPlayer initialTrack={tracks[0] || mockTracks[0]} />
+      </div>
 
       {/* Scroll hint - visible only on first load */}
       <motion.div
         initial={{ opacity: 1 }}
         animate={{ opacity: 0 }}
         transition={{ delay: 5, duration: 1 }}
-        className="fixed bottom-32 right-8 hidden lg:flex flex-col items-center gap-2 text-xs text-gray-400"
+        className="fixed bottom-40 right-4 md:right-8 hidden lg:flex flex-col items-center gap-2 text-xs text-gray-400"
       >
         <span>Scroll to explore</span>
         <motion.div animate={{ y: [0, 8, 0] }} transition={{ duration: 2, repeat: Infinity }}>
